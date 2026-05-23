@@ -1,5 +1,4 @@
-﻿using Exam.Dtos.LessonDtos;
-using Exam.Dtos.StudentDtos;
+﻿using Exam.Dtos.StudentDtos;
 using Exam.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -133,5 +132,20 @@ public class StudentController : Controller
             await _context.SaveChangesAsync();
         }
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> Detail(int id)
+    {
+        var student = await _context.Students
+            .Include(s => s.Examinations)
+                .ThenInclude(e => e.Lesson)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        return View(student);
     }
 }

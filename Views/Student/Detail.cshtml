@@ -1,0 +1,54 @@
+﻿@model Exam.Models.Student
+
+@{
+    ViewData["Title"] = "Şagirdin İmtahanları";
+}
+
+<h2>Şagird Məlumatları</h2>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Şagird Nömrəsi</dt>
+        <dd class="col-sm-10">@Model.Number</dd>
+        <dt class="col-sm-2">Adı və Soyadı</dt>
+        <dd class="col-sm-10">@Model.Name @Model.Surname</dd>
+
+        <dt class="col-sm-2">Sinif</dt>
+        <dd class="col-sm-10">@Model.Class</dd>
+    </dl>
+</div>
+
+<h4 class="mt-4">İştirak Etdiyi İmtahanlar</h4>
+
+@if (Model.Examinations != null && Model.Examinations.Any())
+{
+    <table class="table table-bordered table-striped mt-2">
+        <thead class="table-dark">
+            <tr>
+                <th>Dərs Adı</th>
+                <th>İmtahan Tarixi</th>
+                <th>Qiymət</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exam in Model.Examinations)
+            {
+                <tr>
+                    <td>@(exam.Lesson != null ? exam.Lesson.LessonName : "Silinmiş Dərs")</td>
+                    <td>@exam.ExamDate.ToShortDateString()</td>
+                    <td>
+                        <strong>@exam.Grade</strong>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning mt-2">Bu şagirdin hələ heç bir imtahan nəticəsi yoxdur.</div>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Siyahıya Qayıt</a>
+</div>
