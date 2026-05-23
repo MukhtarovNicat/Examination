@@ -30,16 +30,16 @@ public class ExaminationController : Controller
         var lessons = _context.Lessons.Select(s => new
         {
             Id = s.Id,
-            Name = s.ClassLevel + " - " + s.LessonName
+            DisplayText = s.LessonName + " (Sinif: " + s.ClassLevel + ")"
         }).ToList();
-        ViewBag.Lessons = new SelectList(lessons, "Id", "Name");
+        ViewBag.Lessons = new SelectList(lessons, "Id", "DisplayText");
 
         var students = _context.Students.Select(s => new
         {
             Id = s.Id,
-            FullName = s.Number + " - " + s.Name + " " + s.Surname + " Sinif - " + s.Class
+            DisplayText = s.Number + " - " + s.Name + " " + s.Surname + " (Sinif: " + s.Class + ")" 
         }).ToList();
-        ViewBag.Students = new SelectList(students, "Id", "FullName");
+        ViewBag.Students = new SelectList(students, "Id", "DisplayText");
 
         return View();
     }
