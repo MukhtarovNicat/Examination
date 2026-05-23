@@ -1,0 +1,53 @@
+﻿@model Exam.Dtos.StudentDtos.UpdateStudentDto
+
+@{
+    ViewData["Title"] = "Şagird Məlumatlarına Düzəliş";
+}
+
+<h2>Şagird Məlumatlarına Düzəliş Et</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Number" class="control-label">Şagirdin Nömrəsi</label>
+                <input asp-for="Number" class="form-control" type="number" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label">Adı</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Surname" class="control-label">Soyadı</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Class" class="control-label">Sinif</label>
+                <input asp-for="Class" class="form-control" type="number" />
+                <span asp-validation-for="Class" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Dəyişiklikləri Yadda Saxla" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-secondary">Ləğv Et</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

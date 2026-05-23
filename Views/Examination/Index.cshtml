@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Exam.Models.Examination>
+@{
+    ViewData["Title"] = "İmtahanlar";
+}
+
+<h2>İmtahan Nəticələri</h2>
+<p><a asp-action="Create" class="btn btn-primary">Yeni İmtahan Əlavə Et</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Dərs Adı</th>
+            <th>Şagird Nömrəsi və Adı</th>
+            <th>Tarix</th>
+            <th>Qiymət</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.Lesson != null ? item.Lesson.LessonName : "Silinmiş Dərs")</td>
+                <td>@(item.Student != null ? $"{item.Student.Number} - {item.Student.Name} {item.Student.Surname}" : "Silinmiş Şagird")</td>
+                <td>@item.ExamDate.ToShortDateString()</td>
+                <td>@item.Grade</td>
+            </tr>
+        }
+    </tbody>
+</table>

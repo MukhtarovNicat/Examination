@@ -1,0 +1,47 @@
+﻿@model Exam.Models.Student
+
+@{
+    ViewData["Title"] = "Yeni Şagird";
+}
+
+<h2>Yeni Şagird Qeydiyyatı</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Number" class="control-label">Şagirdin Nömrəsi</label>
+                <input asp-for="Number" class="form-control" type="number" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label">Adı</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Surname" class="control-label">Soyadı</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Class" class="control-label">Sinif</label>
+                <input asp-for="Class" class="form-control" type="number" />
+                <span asp-validation-for="Class" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Yadda Saxla" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Geriyə Qayıt</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

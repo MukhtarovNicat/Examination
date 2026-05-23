@@ -1,0 +1,57 @@
+﻿@model Exam.Dtos.LessonDtos.GetByIdLessonDto
+
+@{
+    ViewData["Title"] = "Dərsə Düzəliş Et";
+}
+
+<h2>Dərs Məlumatlarına Düzəliş Et</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="LessonCode" class="control-label">Dərsin Kodu</label>
+                <input asp-for="LessonCode" class="form-control" />
+                <span asp-validation-for="LessonCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="LessonName" class="control-label">Dərsin Adı</label>
+                <input asp-for="LessonName" class="form-control" />
+                <span asp-validation-for="LessonName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ClassLevel" class="control-label">Sinif</label>
+                <input asp-for="ClassLevel" class="form-control" type="number" />
+                <span asp-validation-for="ClassLevel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TeacherName" class="control-label">Müəllimin Adı</label>
+                <input asp-for="TeacherName" class="form-control" />
+                <span asp-validation-for="TeacherName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TeacherSurname" class="control-label">Müəllimin Soyadı</label>
+                <input asp-for="TeacherSurname" class="form-control" />
+                <span asp-validation-for="TeacherSurname" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Dəyişiklikləri Yadda Saxla" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-secondary">Ləğv Et</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

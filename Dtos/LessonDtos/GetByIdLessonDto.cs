@@ -1,6 +1,6 @@
-﻿namespace Exam.Models;
+﻿namespace Exam.Dtos.LessonDtos;
 
-public class Lesson
+public record GetByIdLessonDto
 {
     public int Id { get; set; }
     public string LessonCode { get; set; }
@@ -8,6 +8,4 @@ public class Lesson
     public byte ClassLevel { get; set; }
     public string TeacherName { get; set; }
     public string TeacherSurname { get; set; }
-
-    public ICollection<Examination>? Examinations { get; set; }
 }

@@ -1,0 +1,42 @@
+﻿@model Exam.Dtos.ExaminationDtos.CreateExaminationDto
+@{
+    ViewData["Title"] = "Yeni İmtahan";
+}
+
+<h2>Yeni İmtahan Nəticəsi</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group mb-3">
+                <label asp-for="LessonId" class="control-label">Dərs</label>
+                <select asp-for="LessonId" class="form-control" asp-items="ViewBag.Lessons">
+                    <option value="">-- Dərs Seçin --</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="StudentId" class="control-label">Şagird</label>
+                <select asp-for="StudentId" class="form-control" asp-items="ViewBag.Students">
+                    <option value="">-- Şagird Seçin --</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ExamDate" class="control-label">İmtahan Tarixi</label>
+                <input asp-for="ExamDate" class="form-control" type="date" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Grade" class="control-label">Qiymət</label>
+                <input asp-for="Grade" class="form-control" type="number" min="0" max="100" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Yadda Saxla" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Geriyə Qayıt</a>
+            </div>
+        </form>
+    </div>
+</div>

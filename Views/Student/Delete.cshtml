@@ -1,0 +1,31 @@
+﻿@model Exam.Dtos.StudentDtos.GetByIdStudentDto
+
+@{
+    ViewData["Title"] = "Şagirdi Sil";
+}
+
+<h2>Şagirdi Sil</h2>
+<h4 class="text-danger">Bu şagirdi və onunla bağlı bütün qeydləri silmək istədiyinizə əminsiniz?</h4>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Şagird Nömrəsi</dt>
+        <dd class="col-sm-9">@Model.Number</dd>
+
+        <dt class="col-sm-3">Adı</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Soyadı</dt>
+        <dd class="col-sm-9">@Model.Surname</dd>
+
+        <dt class="col-sm-3">Sinif</dt>
+        <dd class="col-sm-9">@Model.Class</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Bəli, Sil" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Xeyr, Ləğv Et</a>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Exam.Models.Lesson>
+
+@{
+    ViewData["Title"] = "Dərslər";
+}
+
+<h2>Dərslərin Siyahısı</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Yeni Dərs Əlavə Et</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Dərs Kodu</th>
+            <th>Dərsin Adı</th>
+            <th>Sinif</th>
+            <th>Müəllim</th>
+            <th>Əməliyyatlar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.LessonCode</td>
+                <td>@item.LessonName</td>
+                <td>@item.ClassLevel</td>
+                <td>@item.TeacherName @item.TeacherSurname</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzəliş Et</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
