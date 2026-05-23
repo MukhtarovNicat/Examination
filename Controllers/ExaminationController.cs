@@ -27,12 +27,17 @@ public class ExaminationController : Controller
 
     public IActionResult Create()
     {
-        ViewBag.Lessons = new SelectList(_context.Lessons, "Id", "LessonName");
+        var lessons = _context.Lessons.Select(s => new
+        {
+            Id = s.Id,
+            Name = s.ClassLevel + " - " + s.LessonName
+        }).ToList();
+        ViewBag.Lessons = new SelectList(lessons, "Id", "Name");
 
         var students = _context.Students.Select(s => new
         {
             Id = s.Id,
-            FullName = s.Number + " - " + s.Name + " " + s.Surname
+            FullName = s.Number + " - " + s.Name + " " + s.Surname + " Sinif - " + s.Class
         }).ToList();
         ViewBag.Students = new SelectList(students, "Id", "FullName");
 
@@ -44,21 +49,52 @@ public class ExaminationController : Controller
     {
         if (ModelState.IsValid)
         {
-            var examination = new Examination
+            if (dto.LessonId != null && dto.StudentId != null)
             {
-                LessonId = dto.LessonId,
-                StudentId = dto.StudentId,
-                ExamDate = dto.ExamDate,
-                Grade = dto.Grade
-            };
+                if (await CheckLessonAndStudentClass(dto.LessonId, dto.StudentId) == false)
+                {
+                    ModelState.AddModelError("", "Şagird və dərs eyni sinifə aid deyil!");
+                }
+                else
+                {
+                    var examination = new Examination
+                    {
+                        LessonId = dto.LessonId,
+                        StudentId = dto.StudentId,
+                        ExamDate = dto.ExamDate,
+                        Grade = dto.Grade
+                    };
 
-            await _context.Examinations.AddAsync(examination);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                    await _context.Examinations.AddAsync(examination);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
         }
 
-        ViewBag.Lessons = new SelectList(_context.Lessons, "Id", "LessonName", dto.LessonId);
-        ViewBag.Students = new SelectList(_context.Students, "Id", "Name", dto.StudentId);
+        var lessonList = _context.Lessons.Select(l => new {
+            Id = l.Id,
+            DisplayText = l.LessonName + " (Sinif: " + l.ClassLevel + ")"
+        }).ToList();
+        ViewBag.Lessons = new SelectList(lessonList, "Id", "DisplayText", dto.LessonId);
+
+        var studentList = _context.Students.Select(s => new {
+            Id = s.Id,
+            DisplayText = s.Number + " - " + s.Name + " " + s.Surname + " (Sinif: " + s.Class + ")"
+        }).ToList();
+        ViewBag.Students = new SelectList(studentList, "Id", "DisplayText", dto.StudentId);
+
         return View(dto);
+    }
+
+    private async Task<bool> CheckLessonAndStudentClass(int lessonId, int studentId)
+    {
+        var student = await _context.Students.FirstOrDefaultAsync(x => x.Id == studentId);
+        var lesson = await _context.Lessons.FirstOrDefaultAsync(x => x.Id == lessonId);
+
+        if (student.Class == lesson.ClassLevel)
+            return true;
+
+        return false;
     }
 }
